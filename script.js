@@ -6,19 +6,15 @@ let videoStartTime = 0;
 let totalTimeWatched = 0;
 
 export async function handleYouTubeIframeAPI() {
-  const videoId = await getVideo();
-  document.getElementById("ytplayer").src = videoId;
+  document.getElementById("ytplayer").src = await getVideo();
   player = new YT.Player("ytplayer", {
-    videoId: videoId,
     events: {
       onStateChange: onPlayerStateChange,
     },
   });
-  console.log(videoId);
 }
 
 function onPlayerStateChange(event) {
-  console.log("kkk");
   if (event.data == YT.PlayerState.PLAYING) {
     if (!isVideoStarted) {
       isVideoStarted = true;
@@ -47,15 +43,14 @@ function startTimer() {
     document.getElementById("countdownText").textContent = Math.ceil(
       (duration - time) / 1000
     );
-    console.log("lll");
-    const progress = document.querySelector(".progress");
+    const progress = document.getElementById("progress");
     const circleLength = 2 * Math.PI * 12;
     const offset = (-time / duration) * circleLength;
     progress.style.strokeDashoffset = offset;
 
     if (time >= duration) {
       document.getElementById("couponBtn").style.display = "block";
-      document.querySelector(".close-icon").style.display = "block";
+      document.getElementById("close-icon").style.display = "block";
       document.getElementById("countdownRing").style.display = "none";
       clearInterval(interval);
     }
@@ -63,8 +58,11 @@ function startTimer() {
 }
 
 export function closeVideo() {
-  document.querySelector(".phone-frame").innerHTML =
-    '<h2 style="text-align:center;margin-top:50%;">動画を閉じました</h2>';
+  window.location.href = "/landingpage.html";
+}
+
+export function redirectToAds() {
+  window.location.href = "/ads.html";
 }
 
 async function getVideo() {
@@ -85,5 +83,5 @@ async function getVideo() {
 
   used.push(index);
   localStorage.setItem(key, JSON.stringify(used));
-  return `${baseURL}/${videoIds[index]}?autoplay=1&controls=0&enablejsapi=1&modestbranding=1`;
+  return `${baseURL}/${videoIds[index]}?autoplay=1&controls=0&showinfo=0&enablejsapi=1&modestbranding=1`;
 }
