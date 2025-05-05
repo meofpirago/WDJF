@@ -2,6 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>広告動画再生</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -9,13 +10,21 @@
     />
     <style>
       body {
-        min-height: 100vh;
+        height: 100vh;
+      }
+      circle {
+        fill: none;
+        stroke-width: 4;
+      }
+      svg {
+        position: absolute;
+        transform: rotate(-90deg);
       }
     </style>
   </head>
 
   <body>
-    <div class="h-100 w-100 p-4" style="background-color: #c1c1c1">
+    <div id="landingpage" style="background-color: #c1c1c1;" class="container-fluid p-3">
       <div class="text-center mt-5 mb-4">
         <div class="fw-bold fs-3">WDJF JAPAN 2025</div>
         <div class="fs-4">key visual</div>
@@ -26,18 +35,24 @@
         style="height: 200px"
       />
       <div class="rounded-3 border mb-4 p-3 bg-white mt-4 border-black">
-        <div class="bg-secondary mb-3 rounded-3" style="height: 400px"></div>
-        <div class="fw-bold fs-4 mb-3" style="cursor: pointer;" id="couponBtn">広告動画を視聴する　＞</div>
+        <div id="thumbnail" class="bg-secondary mb-3 rounded-3 position-relative" style="height: 400px">
+          <div class="position-absolute bottom-0 text-white m-2">
+            今CM動画を最後まで見て<br>
+            ”MEETタッチ名刺”の無料アプリをインストールしたら<br>
+            <strong>ZONE ENERGY1本プレゼント！</strong>
+          </div>
+        </div>
+        <div class="fw-bold fs-4 mb-3" style="cursor: pointer;" id="showAds">広告動画を視聴する　＞</div>
         <button class="btn btn-secondary w-100 p-3">
           取得済みクーポンを表示
         </button>
       </div>
       <div
-        class="row justify-content-center text-center"
+        class="d-flex flex-column justify-content-center text-center"
       >
         <img
           src="https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
-          class="p-0 w-50 mt-4 mb-2 rounded-3 border "
+          class="p-0 w-50 mt-4 mb-2 rounded-3 border align-self-center border-black"
         />
         <div class="fw-bold fs-2">MEETタッチ名刺とは</div>
         <div class="fs-4 mb-3">
@@ -50,18 +65,86 @@
           <br/>ただけます。
         </div>
         <button
-          class="bg-primary text-white p-3 rounded-pill"
+          class="bg-primary text-white p-3 btn"
         >
           アプリインストール
         </button>
       </div>
     </div>
+    <div id="ads" style="display: none" class="w-100 h-100 position-relative">
+      <div
+        class="position-absolute text-white fs-3"
+        style="display: none; top: 50px; right: 10px; cursor: pointer"
+        id="close-icon"
+      >
+        X
+      </div>
+      <iframe
+        id="ytplayer"
+        class="w-100 h-100"
+        frameborder="0"
+        allowfullscreen
+        controls="1"
+      ></iframe>
+      <div
+        class="position-absolute text-center w-100"
+        style="bottom: 100px; display: none"
+        id="couponBtn"
+      >
+        <button
+          class="bg-primary text-white p-3 rounded-pill"
+          onclick="alert('クーポンコード: ZONEFREE2025')"
+        >
+          クーポンコードをゲット
+        </button>
+      </div>
+      <div
+        class="position-absolute justify-content-center align-items-center fs-3"
+        style="bottom: 200px; width: 40px; right: 10px; display: none"
+        id="countdownRing"
+      >
+        <svg width="48" height="48">
+          <circle style="stroke: #c1c1c1" cx="24" cy="24" r="20"></circle>
+          <circle
+            id="progress"
+            style="
+              stroke: #ffffff;
+              stroke-dasharray: 220;
+              stroke-dashoffset: 0;
+              transition: stroke-dashoffset 1s linear;
+            "
+            cx="24"
+            cy="24"
+            r="20"
+          ></circle>
+        </svg>
+        <div
+          class="position-absolute fw-bold text-white fs-6"
+          id="countdownText"
+        >
+          15
+        </div>
+      </div>
+    </div>
     <script type="module">
-      import { redirectToAds } from "/script.js";
+      import { showAds, closeVideo, handleYouTubeIframeAPI } from "/script.js";
 
-      const btn = document.getElementById("couponBtn");
+      const btn = document.getElementById("showAds");
       btn.addEventListener("click", () => {
-        redirectToAds();
+        showAds();
+      });
+
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+
+      window.onYouTubeIframeAPIReady = () => {
+        handleYouTubeIframeAPI();
+      };
+
+      const closeIcon = document.getElementById("close-icon");
+      closeIcon.addEventListener("click", () => {
+        closeVideo();
       });
     </script>
   </body>
