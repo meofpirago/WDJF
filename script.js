@@ -6,9 +6,9 @@ let player;
 let isVideoStarted = false;
 let videoStartTime = 0;
 let totalTimeWatched = 0;
+let ytplayer = document.getElementById("ytplayer");
 
 const progress = document.getElementById("progress");
-const ytplayer = document.getElementById("ytplayer");
 const thumbnail = document.getElementById("thumbnail");
 const countdownText = document.getElementById("countdownText");
 const countdownRing = document.getElementById("countdownRing");
@@ -16,15 +16,56 @@ const couponBtn = document.getElementById("couponBtn");
 const closeIcon = document.getElementById("close-icon");
 const landingPage = document.getElementById("landingpage");
 const adsContainer = document.getElementById("ads");
+const content = document.getElementById("content");
+const overlay = document.getElementById("overlay");
+const btnShowAds = document.getElementById("btnShowAds");
+const btnDownloadApp = document.getElementById("btnDownloadApp");
+
+btnShowAds.addEventListener("click", () => {
+  showAds();
+});
+btnDownloadApp.addEventListener("click", () => {
+  downloadApp();
+});
+closeIcon.addEventListener("click", () => {
+  closeAds();
+});
 
 export function handleYouTubeIframeAPI() {
-  loadVideo();
+  loadThumbnail();
 }
 
-async function loadVideo() {
+function loading() {
+  overlay.style.display = "block";
+  content.style.display = "none";
+}
+
+function hideLoading() {
+  overlay.style.display = "none";
+  content.style.display = "block";
+}
+
+function downloadApp() {
+  //TODO toggle input field
+  alert("TEST");
+}
+
+async function loadThumbnail() {
+  loading();
   const videoId = await getRandomVideo();
+  if (!document.getElementById("ytplayer")) {
+    const iframe = document.createElement("iframe");
+    iframe.id = "ytplayer";
+    iframe.className = "w-100 h-100";
+    iframe.frameborder = "0";
+    iframe.allowFullscreen = true;
+    iframe.controls = "1";
+    adsContainer.appendChild(iframe);
+    ytplayer = document.getElementById("ytplayer");
+  }
   ytplayer.src = `${BASE_URL}/${videoId}?controls=0&showinfo=0&enablejsapi=1&modestbranding=1`;
   thumbnail.style.backgroundImage = `url("${THUMBNAIL_URL}/${videoId}/hqdefault.jpg")`;
+  hideLoading();
 }
 
 function onPlayerStateChange(event) {
@@ -65,7 +106,7 @@ function startCountdownTimer() {
   }, 1000);
 }
 
-export function closeVideo() {
+function closeAds() {
   landingPage.style.display = "block";
   adsContainer.style.display = "none";
   couponBtn.style.display = "none";
@@ -76,14 +117,15 @@ export function closeVideo() {
 
   totalTimeWatched = 0;
   isVideoStarted = false;
-  
+
   if (player) {
+    player.destroy();
     player = null;
-    loadVideo();
+    loadThumbnail();
   }
 }
 
-export function showAds() {
+function showAds() {
   landingPage.style.display = "none";
   adsContainer.style.display = "block";
 
