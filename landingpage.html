@@ -6,8 +6,7 @@
     <title>広告動画再生</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <style>
       body {
         min-height: 100vh;
@@ -30,119 +29,121 @@
   </head>
 
   <body>
-    <div id="landingpage" style="background-color: rgb(217, 217, 217);" class="container-fluid p-3">
-      <div class="text-center mt-5 mb-4">
-        <div class="fw-bold fs-3">WDJF JAPAN 2025</div>
-        <div class="fs-4">key visual</div>
-      </div>
-      <img
-        src="https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
-        class="w-100 rounded-3 border mt-4 mb-4 border-black border-5"
-        style="height: 200px"
-      />
-      <div class="rounded-3 mb-4 p-3 bg-white mt-4 " style="border: 5px solid rgb(117, 117, 117);">
-        <div class="mb-3 rounded-3 bg-black">
-          <div id="thumbnail" class="rounded-top-3 bg-cover-center">
-          </div>
-          <div class="text-white p-2 pt-0">
-            今CM動画を最後まで見て<br>
-            ”MEETタッチ名刺”の無料アプリをインストールしたら<br>
-            <span class="fw-bold fs-2">ZONE ENERGY1本プレゼント！</span>
-          </div>
+    <div id="content">
+      <div id="landingpage" style="background-color: rgb(217, 217, 217);"
+        class="container-fluid p-3">
+        <div class="text-center mt-5 mb-4">
+          <div class="fw-bold fs-3">WDJF JAPAN 2025</div>
+          <div class="fs-4">key visual</div>
         </div>
-        <div class="fw-bold fs-4 mb-3" style="cursor: pointer;" id="showAds">広告動画を視聴する　＞</div>
-        <button class="btn w-100 p-3 text-white" style="background-color: rgb(117, 117, 117);">
-          取得済みクーポンを表示
-        </button>
-      </div>
-      <div
-        class="d-flex flex-column justify-content-center text-center"
-      >
         <img
           src="https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
-          class="p-0 w-50 mt-4 mb-2 rounded-3 border align-self-center border-black"
-        />
-        <div class="fw-bold fs-2">MEETタッチ名刺とは</div>
-        <div class="fs-4 mb-3">
-          スマホにかざすだけで情報交換。連絡先や
-          </br/>SNSシェア、名刺交換がワンタッチで。
+          class="w-100 rounded-3 border mt-4 mb-4 border-black border-5"
+          style="height: 200px" />
+        <div class="rounded-3 mb-4 p-3 bg-white mt-4 "
+          style="border: 5px solid rgb(117, 117, 117);">
+          <div class="mb-3 rounded-3 bg-black">
+            <div id="thumbnail" class="rounded-top-3 bg-cover-center">
+            </div>
+            <div class="text-white p-2 pt-0">
+              今CM動画を最後まで見て<br>
+              ”MEETタッチ名刺”の無料アプリをインストールしたら<br>
+              <span class="fw-bold fs-2">ZONE ENERGY1本プレゼント！</span>
+            </div>
+          </div>
+          <div class="fw-bold fs-4 mb-3" style="cursor: pointer;"
+            id="btnShowAds">広告動画を視聴する ＞</div>
+          <button class="btn w-100 p-3 text-white"
+            style="background-color: rgb(117, 117, 117);">
+            取得済みクーポンを表示
+          </button>
         </div>
-        <div class="fs-4 mb-3">
-          アカウント作成後、お手元のMEETを登録いた
-          <br/>だくと、そのままタッチ名刺としてご利用い
-          <br/>ただけます。
+        <div
+          class="d-flex flex-column justify-content-center text-center">
+          <img
+            src="https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
+            class="p-0 w-50 mt-4 mb-2 rounded-3 border align-self-center border-black" />
+          <div class="fw-bold fs-2 mb-3">MEETタッチ名刺とは</div>
+          <div class="fs-4 mb-3">
+            スマホにかざすだけで情報交換。連絡先や
+            </br/>SNSシェア、名刺交換がワンタッチで。
+          </div>
+          <div class="fs-4 mb-3">
+            アカウント作成後、お手元のMEETを登録いた
+            <br />だくと、そのままタッチ名刺としてご利用い
+            <br />ただけます。
+          </div>
+          <div class="mt-2">
+            <button
+              id="btnDownloadApp"
+              class="text-white w-100 p-3 btn border-5"
+              style="background-color: rgb(61, 173, 255); border-color: rgb(0, 122, 210);">
+              アプリインストール
+            </button>
+          </div>
         </div>
-        <button
-          class="text-white p-3 btn border-5"
-          style="background-color: rgb(61, 173, 255); border-color: rgb(0, 122, 210);"
-        >
-          アプリインストール
-        </button>
+      </div>
+      <div id="ads" style="display: none"
+        class="w-100 vh-100 position-relative">
+        <div
+          class="position-absolute text-white fs-2"
+          style="display: none; top: 50px; right: 10px; cursor: pointer;"
+          id="close-icon">
+          X
+        </div>
+        <iframe
+          id="ytplayer"
+          class="w-100 h-100"
+          frameborder="0"
+          allowfullscreen
+          controls="1"></iframe>
+        <div
+          class="position-absolute text-center w-100"
+          style="bottom: 100px; display: none"
+          id="couponBtn">
+          <button
+            class="text-white px-5 py-2 btn border-5"
+            style="background-color: rgb(61, 173, 255); border-color: rgb(0, 122, 210);"
+            onclick="alert('クーポンコード: ZONEFREE2025')">
+            クーポンコードをゲット
+          </button>
+        </div>
+        <div
+          class="position-absolute justify-content-center align-items-center fs-3"
+          style="bottom: 200px; width: 40px; right: 10px; display: none"
+          id="countdownRing">
+          <svg width="48" height="48">
+            <circle style="stroke: rgb(30, 30, 30)" cx="24" cy="24"
+              r="20"></circle>
+            <circle
+              id="progress"
+              style="
+                stroke: #ffffff;
+                stroke-dasharray: 220;
+                stroke-dashoffset: 0;
+                transition: stroke-dashoffset 1s linear;
+              "
+              cx="24"
+              cy="24"
+              r="20"></circle>
+          </svg>
+          <div
+            class="position-absolute fw-bold text-white fs-6"
+            id="countdownText">
+            15
+          </div>
+        </div>
       </div>
     </div>
-    <div id="ads" style="display: none" class="w-100 vh-100 position-relative">
+    <div id="overlay" style="display: none;">
       <div
-        class="position-absolute text-white fs-2"
-        style="display: none; top: 50px; right: 10px; cursor: pointer;"
-        id="close-icon"
-      >
-        X
-      </div>
-      <iframe
-        id="ytplayer"
-        class="w-100 h-100"
-        frameborder="0"
-        allowfullscreen
-        controls="1"
-      ></iframe>
-      <div
-        class="position-absolute text-center w-100"
-        style="bottom: 100px; display: none"
-        id="couponBtn"
-      >
-        <button
-          class="text-white px-5 py-2 btn border-5"
-          style="background-color: rgb(61, 173, 255); border-color: rgb(0, 122, 210);"
-          onclick="alert('クーポンコード: ZONEFREE2025')"
-        >
-          クーポンコードをゲット
-        </button>
-      </div>
-      <div
-        class="position-absolute justify-content-center align-items-center fs-3"
-        style="bottom: 200px; width: 40px; right: 10px; display: none"
-        id="countdownRing"
-      >
-        <svg width="48" height="48">
-          <circle style="stroke: rgb(30, 30, 30)" cx="24" cy="24" r="20"></circle>
-          <circle
-            id="progress"
-            style="
-              stroke: #ffffff;
-              stroke-dasharray: 220;
-              stroke-dashoffset: 0;
-              transition: stroke-dashoffset 1s linear;
-            "
-            cx="24"
-            cy="24"
-            r="20"
-          ></circle>
-        </svg>
-        <div
-          class="position-absolute fw-bold text-white fs-6"
-          id="countdownText"
-        >
-          15
-        </div>
+        class="w-100 vh-100 d-flex justify-content-center align-items-center position-absolute top-0 fw-bold fs-1"
+        style="background-color: rgb(117, 117, 117);">
+        Loading...
       </div>
     </div>
     <script type="module">
-      import { showAds, closeAds, handleYouTubeIframeAPI } from "/script.js";
-
-      const btn = document.getElementById("showAds");
-      btn.addEventListener("click", () => {
-        showAds();
-      });
+      import { handleYouTubeIframeAPI } from "/script.js";
 
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
@@ -151,11 +152,6 @@
       window.onYouTubeIframeAPIReady = () => {
         handleYouTubeIframeAPI();
       };
-
-      const closeIcon = document.getElementById("close-icon");
-      closeIcon.addEventListener("click", () => {
-        closeAds();
-      });
     </script>
   </body>
 </html>

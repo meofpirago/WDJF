@@ -16,12 +16,42 @@ const couponBtn = document.getElementById("couponBtn");
 const closeIcon = document.getElementById("close-icon");
 const landingPage = document.getElementById("landingpage");
 const adsContainer = document.getElementById("ads");
+const content = document.getElementById("content");
+const overlay = document.getElementById("overlay");
+const btnShowAds = document.getElementById("btnShowAds");
+const btnDownloadApp = document.getElementById("btnDownloadApp");
+
+btnShowAds.addEventListener("click", () => {
+  showAds();
+});
+btnDownloadApp.addEventListener("click", () => {
+  downloadApp();
+});
+closeIcon.addEventListener("click", () => {
+  closeAds();
+});
 
 export function handleYouTubeIframeAPI() {
   loadThumbnail();
 }
 
+function loading() {
+  overlay.style.display = "block";
+  content.style.display = "none";
+}
+
+function hideLoading() {
+  overlay.style.display = "none";
+  content.style.display = "block";
+}
+
+function downloadApp() {
+  //TODO toggle input field
+  alert("TEST");
+}
+
 async function loadThumbnail() {
+  loading();
   const videoId = await getRandomVideo();
   if (!document.getElementById("ytplayer")) {
     const iframe = document.createElement("iframe");
@@ -35,6 +65,7 @@ async function loadThumbnail() {
   }
   ytplayer.src = `${BASE_URL}/${videoId}?controls=0&showinfo=0&enablejsapi=1&modestbranding=1`;
   thumbnail.style.backgroundImage = `url("${THUMBNAIL_URL}/${videoId}/hqdefault.jpg")`;
+  hideLoading();
 }
 
 function onPlayerStateChange(event) {
@@ -75,7 +106,7 @@ function startCountdownTimer() {
   }, 1000);
 }
 
-export function closeAds() {
+function closeAds() {
   landingPage.style.display = "block";
   adsContainer.style.display = "none";
   couponBtn.style.display = "none";
@@ -86,7 +117,7 @@ export function closeAds() {
 
   totalTimeWatched = 0;
   isVideoStarted = false;
-  
+
   if (player) {
     player.destroy();
     player = null;
@@ -94,7 +125,7 @@ export function closeAds() {
   }
 }
 
-export function showAds() {
+function showAds() {
   landingPage.style.display = "none";
   adsContainer.style.display = "block";
 
