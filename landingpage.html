@@ -137,7 +137,7 @@
       </div>
     </div>
     <script type="module">
-      import { showAds, closeVideo, handleYouTubeIframeAPI } from "/script.js";
+      import { showAds, closeAds, handleYouTubeIframeAPI } from "/script.js";
 
       const btn = document.getElementById("showAds");
       btn.addEventListener("click", () => {
@@ -154,7 +154,7 @@
 
       const closeIcon = document.getElementById("close-icon");
       closeIcon.addEventListener("click", () => {
-        closeVideo();
+        closeAds();
       });
     </script>
   </body>
