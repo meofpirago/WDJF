@@ -10,7 +10,7 @@
     />
     <style>
       body {
-        height: 100vh;
+        min-height: 100vh;
       }
       circle {
         fill: none;
@@ -20,30 +20,38 @@
         position: absolute;
         transform: rotate(-90deg);
       }
+      .bg-cover-center {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        height: 300px;
+      }
     </style>
   </head>
 
   <body>
-    <div id="landingpage" style="background-color: #c1c1c1;" class="container-fluid p-3">
+    <div id="landingpage" style="background-color: rgb(217, 217, 217);" class="container-fluid p-3">
       <div class="text-center mt-5 mb-4">
         <div class="fw-bold fs-3">WDJF JAPAN 2025</div>
         <div class="fs-4">key visual</div>
       </div>
       <img
         src="https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
-        class="w-100 rounded-3 border mt-4 mb-4 border-black"
+        class="w-100 rounded-3 border mt-4 mb-4 border-black border-5"
         style="height: 200px"
       />
-      <div class="rounded-3 border mb-4 p-3 bg-white mt-4 border-black">
-        <div id="thumbnail" class="bg-secondary mb-3 rounded-3 position-relative" style="height: 400px">
-          <div class="position-absolute bottom-0 text-white m-2">
+      <div class="rounded-3 mb-4 p-3 bg-white mt-4 " style="border: 5px solid rgb(117, 117, 117);">
+        <div class="mb-3 rounded-3 bg-black">
+          <div id="thumbnail" class="rounded-top-3 bg-cover-center">
+          </div>
+          <div class="text-white p-2 pt-0">
             今CM動画を最後まで見て<br>
             ”MEETタッチ名刺”の無料アプリをインストールしたら<br>
-            <strong>ZONE ENERGY1本プレゼント！</strong>
+            <span class="fw-bold fs-2">ZONE ENERGY1本プレゼント！</span>
           </div>
         </div>
         <div class="fw-bold fs-4 mb-3" style="cursor: pointer;" id="showAds">広告動画を視聴する　＞</div>
-        <button class="btn btn-secondary w-100 p-3">
+        <button class="btn w-100 p-3 text-white" style="background-color: rgb(117, 117, 117);">
           取得済みクーポンを表示
         </button>
       </div>
@@ -65,16 +73,17 @@
           <br/>ただけます。
         </div>
         <button
-          class="bg-primary text-white p-3 btn"
+          class="text-white p-3 btn border-5"
+          style="background-color: rgb(61, 173, 255); border-color: rgb(0, 122, 210);"
         >
           アプリインストール
         </button>
       </div>
     </div>
-    <div id="ads" style="display: none" class="w-100 h-100 position-relative">
+    <div id="ads" style="display: none" class="w-100 vh-100 position-relative">
       <div
-        class="position-absolute text-white fs-3"
-        style="display: none; top: 50px; right: 10px; cursor: pointer"
+        class="position-absolute text-white fs-2"
+        style="display: none; top: 50px; right: 10px; cursor: pointer;"
         id="close-icon"
       >
         X
@@ -92,7 +101,8 @@
         id="couponBtn"
       >
         <button
-          class="bg-primary text-white p-3 rounded-pill"
+          class="text-white px-5 py-2 btn border-5"
+          style="background-color: rgb(61, 173, 255); border-color: rgb(0, 122, 210);"
           onclick="alert('クーポンコード: ZONEFREE2025')"
         >
           クーポンコードをゲット
@@ -104,7 +114,7 @@
         id="countdownRing"
       >
         <svg width="48" height="48">
-          <circle style="stroke: #c1c1c1" cx="24" cy="24" r="20"></circle>
+          <circle style="stroke: rgb(30, 30, 30)" cx="24" cy="24" r="20"></circle>
           <circle
             id="progress"
             style="
