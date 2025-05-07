@@ -30,7 +30,7 @@
 
   <body>
     <div id="content">
-      <div id="landingpage" style="background-color: rgb(217, 217, 217);"
+      <div id="landingpage" style="background-color: rgb(179, 179, 179);"
         class="container-fluid p-3">
         <div class="text-center mt-5 mb-4">
           <div class="fw-bold fs-3">WDJF JAPAN 2025</div>
@@ -82,12 +82,36 @@
             </button>
           </div>
         </div>
+        <div id="register" class="fw-bold" style="display: none">
+          <div class="fs-2 mb-4 text-center mt-3">
+            新規アカウント作成
+          </div>
+          <div id="loginBtn" class="text-center text-decoration-underline mb-4">
+            すでにアカウントをお持ちの方はこちら
+          </div>
+          <div class="mb-1">
+            <label for="email" class="form-label">メールアドレス</label>
+            <input type="email" class="form-control" id="email"
+              style="border: 5px solid rgb(117, 117, 117); height: 60px;">
+          </div>
+          <div class="mb-5">
+            <label for="password" class="form-label">パスワード</label>
+            <input type="password" class="form-control" id="password"
+              style="border: 5px solid rgb(117, 117, 117); height: 60px;">
+          </div>
+          <button
+            id="btnRegister"
+            class="text-white w-100 p-3 btn border-5 mb-2"
+            style="background-color: rgb(61, 173, 255); border-color: rgb(0, 122, 210);">
+            送信
+          </button>
+        </div>
       </div>
       <div id="ads" style="display: none"
         class="w-100 vh-100 position-relative">
         <div
           class="position-absolute text-white fs-2"
-          style="display: none; top: 50px; right: 10px; cursor: pointer;"
+          style="display: none; top: 50px; right: 10px; cursor: pointer; z-index: 100;"
           id="close-icon">
           X
         </div>
@@ -96,15 +120,18 @@
           class="w-100 h-100"
           frameborder="0"
           allowfullscreen
-          controls="1"></iframe>
+          controls="0"></iframe>
+        <div id="video-blocker"
+          style="position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+              background-color: transparent; z-index: 10; display: none"></div>
         <div
           class="position-absolute text-center w-100"
-          style="bottom: 100px; display: none"
+          style="bottom: 100px; display: none; z-index: 100;"
           id="couponBtn">
           <button
+            id="btnGetCoupon"
             class="text-white px-5 py-2 btn border-5"
-            style="background-color: rgb(61, 173, 255); border-color: rgb(0, 122, 210);"
-            onclick="alert('クーポンコード: ZONEFREE2025')">
+            style="background-color: rgb(61, 173, 255); border-color: rgb(0, 122, 210);">
             クーポンコードをゲット
           </button>
         </div>
@@ -142,16 +169,6 @@
         Loading...
       </div>
     </div>
-    <script type="module">
-      import { handleYouTubeIframeAPI } from "/script.js";
-
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.body.appendChild(tag);
-
-      window.onYouTubeIframeAPIReady = () => {
-        handleYouTubeIframeAPI();
-      };
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>

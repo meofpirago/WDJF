@@ -1,9 +1,17 @@
 const DURATION = 15000;
 const BASE_URL = "https://www.youtube.com/embed";
 const THUMBNAIL_URL = "https://img.youtube.com/vi";
+const tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
+
+window.onYouTubeIframeAPIReady = () => {
+  handleYouTubeIframeAPI();
+};
 
 let player;
 let isVideoStarted = false;
+let isOpened = false;
 let videoStartTime = 0;
 let totalTimeWatched = 0;
 let ytplayer = document.getElementById("ytplayer");
@@ -20,18 +28,51 @@ const content = document.getElementById("content");
 const overlay = document.getElementById("overlay");
 const btnShowAds = document.getElementById("btnShowAds");
 const btnDownloadApp = document.getElementById("btnDownloadApp");
+const register = document.getElementById("register");
+const btnRegister = document.getElementById("btnRegister");
+const loginBtn = document.getElementById("loginBtn");
+const blocker = document.getElementById("video-blocker");
+const btnGetCoupon = document.getElementById("btnGetCoupon");
 
+btnGetCoupon.addEventListener("click", () => {
+  //TODO
+  alert("TEST");
+});
+loginBtn.addEventListener("click", () => {
+  //TODO
+  alert("TEST");
+});
+btnRegister.addEventListener("click", () => {
+  //TODO
+  alert("TEST");
+});
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && isVideoStarted) {
+    if (totalTimeWatched < DURATION) {
+      isVideoStarted = false;
+      player.seekTo(0);
+      player.pauseVideo();
+      videoStartTime = 0;
+      totalTimeWatched = 0;
+      countdownRing.style.display = "none";
+      blocker.style.display = "none";
+      drawCircle();
+    }
+  } else {
+    player.playVideo();
+  }
+});
 btnShowAds.addEventListener("click", () => {
   showAds();
 });
 btnDownloadApp.addEventListener("click", () => {
-  downloadApp();
+  openRegisterForm();
 });
 closeIcon.addEventListener("click", () => {
   closeAds();
 });
 
-export function handleYouTubeIframeAPI() {
+function handleYouTubeIframeAPI() {
   loadThumbnail();
 }
 
@@ -45,9 +86,10 @@ function hideLoading() {
   content.style.display = "block";
 }
 
-function downloadApp() {
-  //TODO toggle input field
-  alert("TEST");
+function openRegisterForm() {
+  btnDownloadApp.style.display = "none";
+  register.style.display = "block";
+  isOpened = true;
 }
 
 async function loadThumbnail() {
@@ -63,7 +105,7 @@ async function loadThumbnail() {
     adsContainer.appendChild(iframe);
     ytplayer = document.getElementById("ytplayer");
   }
-  ytplayer.src = `${BASE_URL}/${videoId}?controls=0&showinfo=0&enablejsapi=1&modestbranding=1`;
+  ytplayer.src = `${BASE_URL}/${videoId}?controls=0&showinfo=0&enablejsapi=1&modestbranding=1&disablekb=1`;
   thumbnail.style.backgroundImage = `url("${THUMBNAIL_URL}/${videoId}/hqdefault.jpg")`;
   hideLoading();
 }
@@ -72,32 +114,37 @@ function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING) {
     if (!isVideoStarted) {
       isVideoStarted = true;
+      blocker.style.display = "block";
       if (totalTimeWatched == 0) countdownRing.style.display = "flex";
       startCountdownTimer();
     }
     videoStartTime = Date.now();
   } else if (event.data == YT.PlayerState.PAUSED) {
-    totalTimeWatched += Date.now() - videoStartTime;
     isVideoStarted = false;
   } else if (event.data == YT.PlayerState.ENDED) {
+    blocker.style.display = "none";
     totalTimeWatched = 0;
   }
 }
 
-function startCountdownTimer() {
+function drawCircle() {
   const circleLength = 2 * Math.PI * 21;
+  countdownText.textContent = Math.ceil((DURATION - totalTimeWatched) / 1000);
+  progress.style.strokeDashoffset =
+    (-totalTimeWatched / DURATION) * circleLength;
+}
 
+function startCountdownTimer() {
   const interval = setInterval(() => {
     if (!isVideoStarted || totalTimeWatched >= DURATION) {
       clearInterval(interval);
       return;
     }
 
-    let watchedTime = totalTimeWatched + (Date.now() - videoStartTime);
-    countdownText.textContent = Math.ceil((DURATION - watchedTime) / 1000);
-    progress.style.strokeDashoffset = (-watchedTime / DURATION) * circleLength;
+    totalTimeWatched = Date.now() - videoStartTime;
+    drawCircle();
 
-    if (watchedTime >= DURATION) {
+    if (totalTimeWatched >= DURATION) {
       couponBtn.style.display = "block";
       closeIcon.style.display = "block";
       countdownRing.style.display = "none";
@@ -112,6 +159,7 @@ function closeAds() {
   couponBtn.style.display = "none";
   closeIcon.style.display = "none";
   countdownRing.style.display = "none";
+  blocker.style.display = "none";
   progress.style.strokeDashoffset = 0;
   countdownText.textContent = DURATION / 1000;
 
